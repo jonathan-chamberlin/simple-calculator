@@ -1,0 +1,37 @@
+
+import ipywidgets as widgets
+from IPython.display import display
+
+num1 = widgets.FloatText(description='Number one:')
+num2 = widgets.FloatText(description='Number two:')
+operation = widgets.Dropdown(
+    options=[('Addition', 'a'), ('Subtraction', 'b'), ('Multiplication', 'c'), ('Division', 'd')],
+    description='Operation:'
+)
+output = widgets.Output()
+
+def calculate(change):
+    with output:
+        output.clear_output()
+        a = num1.value
+        b = num2.value
+        op = operation.value
+        if op == 'a':
+            result = a + b
+        elif op == 'b':
+            result = a - b
+        elif op == 'c':
+            result = a * b
+        elif op == 'd':
+            if b == 0:
+                result = "Error: Division by zero is not allowed."
+            else:
+                result = a / b
+        print(f"The result of operation is: {result}")
+        print(a, b, op, result)  # This line is just for debugging purposes
+
+button = widgets.Button(description="Calculate")
+button.on_click(calculate)
+
+display(num1, num2, operation, button, output)
+
